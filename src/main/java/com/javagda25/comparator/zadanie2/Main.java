@@ -6,19 +6,20 @@ package com.javagda25.comparator.zadanie2;
 //
 // W mainie stwórz kilka instancji klasy OfertaSprzedaży i dodaj je do Listy. Po dodaniu posortuj listę i na
 // ekran wypisz  wynik przed sortowaniem, oraz po sortowaniu. Spróbuj również sortowania 'w drugą stronę'.
+//
 // *Stwórz parser komend. Pozwól użytkownikowi w konsoli kontrolować aplikację. Parser powinien obsługiwać komendy:
 // dodaj mleko 2.3
 // listuj
 // sortuj rosnaco (komenda nie listuje, tylko sortuje)
 // sortuj malejaco (komenda nie listuje, tylko sortuje)
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         List<OfertaSprzedazy> ofertaSprzedazies = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
         ofertaSprzedazies.add(new OfertaSprzedazy("Acer", 2391.40));
         ofertaSprzedazies.add(new OfertaSprzedazy("Asus", 3321.59));
         ofertaSprzedazies.add(new OfertaSprzedazy("Lenovo", 1500.45));
@@ -27,5 +28,32 @@ public class Main {
         Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(false));
 //        Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(true));
         System.out.println(ofertaSprzedazies);
+
+        String komenda;
+        do {
+            System.out.println("Wybierz dostępną opcję: " + Arrays.toString(Komendy.values()));
+            komenda = scanner.next();
+            if (komenda.equalsIgnoreCase("quit")) {
+                break;
+            }
+            Komendy komendy = Komendy.valueOf(komenda.toUpperCase());
+
+            switch (komendy) {
+                case MLEKO_2_3:
+                    ofertaSprzedazies.add(new OfertaSprzedazy("Mleko 2.3", 3.5));
+                    break;
+                case LISTUJ:
+                    System.out.println(ofertaSprzedazies);
+                    break;
+                case SORTUJ_ROSNACO:
+                    Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(true));
+                    break;
+                case SORTUJ_MALEJACO:
+                    Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(false));
+                    break;
+                    default:
+                        System.out.println("Błędna komenda");
+            }
+        } while ()
     }
 }
