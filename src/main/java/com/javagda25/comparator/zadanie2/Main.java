@@ -25,35 +25,45 @@ public class Main {
         ofertaSprzedazies.add(new OfertaSprzedazy("Lenovo", 1500.45));
         ofertaSprzedazies.add(new OfertaSprzedazy("HP", 2998.40));
 
-        Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(false));
+//        Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(false));
 //        Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(true));
-        System.out.println(ofertaSprzedazies);
+//        System.out.println(ofertaSprzedazies);
 
         String komenda;
         do {
             System.out.println("Wybierz dostępną opcję: " + Arrays.toString(Komendy.values()));
+            System.out.println("Aby wyjść z programu wpisz QUIT.");
             komenda = scanner.next();
             if (komenda.equalsIgnoreCase("quit")) {
                 break;
             }
-            Komendy komendy = Komendy.valueOf(komenda.toUpperCase());
 
-            switch (komendy) {
-                case MLEKO_2_3:
-                    ofertaSprzedazies.add(new OfertaSprzedazy("Mleko 2.3", 3.5));
-                    break;
-                case LISTUJ:
-                    System.out.println(ofertaSprzedazies);
-                    break;
-                case SORTUJ_ROSNACO:
-                    Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(true));
-                    break;
-                case SORTUJ_MALEJACO:
-                    Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(false));
-                    break;
+            try {
+                Komendy komendy = Komendy.valueOf(komenda.toUpperCase());
+
+                switch (komendy) {
+                    case MLEKO_2_3:
+                        ofertaSprzedazies.add(new OfertaSprzedazy("Mleko 2.3", 3.5));
+                        break;
+                    case LISTUJ:
+                        System.out.println(ofertaSprzedazies);
+                        break;
+                    case SORTUJ_ROSNACO:
+                        Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(true));
+                        break;
+                    case SORTUJ_MALEJACO:
+                        Collections.sort(ofertaSprzedazies, new OfertaSprzedazyComparator(false));
+                        break;
                     default:
-                        System.out.println("Błędna komenda");
+                        continue;
+                }
+
+            } catch (IllegalArgumentException e) {
+                System.err.println("Błąd. Nie ma takiego wyboru.");
+                continue;
             }
-        } while ()
+
+        }
+        while (!komenda.equals("quit"));
     }
 }
